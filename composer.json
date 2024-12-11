@@ -16,6 +16,7 @@
         "laravel/pail": "^1.1",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "sentry/sentry-laravel": "^4.10",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
