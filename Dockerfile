@@ -38,7 +38,7 @@ RUN pnpm run build
 # Prod server, copy vendor & public and run octane server
 FROM base
 
-LABEL org.opencontainers.image.source="https://github.com/navaneeth-dev/attendance-monitoring-v2"
+LABEL org.opencontainers.image.source="https://github.com/onlyvels/attendance-monitoring"
 
 ENV OCTANE_SERVER=frankenphp
 
