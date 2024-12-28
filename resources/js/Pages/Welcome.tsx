@@ -10,7 +10,7 @@ export default function Welcome() {
 
             <main>
                 <section className="max-w-screen-xl mx-auto py-12 md:py-24 lg:py-32 xl:py-48">
-                    <div className="container px-4 md:px-6">
+                    <div className="container px-4 md:px-6 mx-auto">
                         <div className="flex flex-col items-center space-y-4 text-center">
                             <div className="flex flex-col gap-y-2 items-center">
                                 <img src="https://static.rizexor.com/assets/ov.png" alt="OnlyVels" className="w-64"/>
