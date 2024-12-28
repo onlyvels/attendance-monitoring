@@ -23,10 +23,10 @@ export default function Welcome() {
                                 </p>
                             </div>
                             <div className="space-x-4">
-                                <Button size="lg">
+                                <Button size="lg" asChild>
                                     <Link href={route("register")}>Get Started</Link>
                                 </Button>
-                                <Button variant="outline" size="lg">
+                                <Button variant="outline" size="lg" asChild>
                                     <Link href={route("login")}>Login</Link>
                                 </Button>
                             </div>
