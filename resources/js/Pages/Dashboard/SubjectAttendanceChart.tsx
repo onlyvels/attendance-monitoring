@@ -51,12 +51,6 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                     <LineChart
                         accessibilityLayer
                         data={chartData}
-                        margin={{
-                            left: 60,
-                            right: 60,
-                            top: 30,
-                            bottom: 30,
-                        }}
                     >
                         <CartesianGrid
                             strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.3}/>
@@ -65,9 +59,9 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                         />
                         <YAxis/>
                         <ChartTooltip
-                            content={<ChartTooltipContent/>}
+                            content={<ChartTooltipContent className="hidden lg:grid"/>}
                         />
-                        <ChartLegend content={<ChartLegendContent/>}/>
+                        <ChartLegend content={<ChartLegendContent className="hidden lg:flex"/>}/>
                         {subject_filters.map((subject) => (
                             <Line
                                 key={subject.subject.id}
