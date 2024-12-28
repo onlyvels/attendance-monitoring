@@ -85,6 +85,6 @@ class FetchAttendance implements ShouldQueue
         Http::withHeaders([
             "Title" => "Attendance",
         ])->withBody("Attendance is " . $attendance->percent)
-            ->post("https://ntfy.foss.rizexor.com/" . $this->user->ntfy_channel);
+            ->post("https://ntfy.fossindia.ovh/" . $this->user->ntfy_channel);
     }
 }
