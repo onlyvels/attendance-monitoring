@@ -1,10 +1,10 @@
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import {Head, Link, useForm} from '@inertiajs/react';
 import {FormEventHandler} from 'react';
+import {Button} from "@/Components/UI/Button";
+import {Input} from "@/Components/UI/Input";
+import {Label} from "@/Components/UI/label";
 
 export default function Register() {
     const {data, setData, post, processing, errors, reset} = useForm({
@@ -25,19 +25,21 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register"/>
+            <Head title="Register">
+                <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+            </Head>
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name"/>
+                    <Label htmlFor="name">Name</Label>
 
-                    <TextInput
+                    <Input
                         id="name"
                         name="name"
                         value={data.name}
                         className="mt-1 block w-full"
                         autoComplete="name"
-                        isFocused={true}
+                        autoFocus={true}
                         onChange={(e) => setData('name', e.target.value)}
                         required
                     />
@@ -46,9 +48,9 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="rollno" value="Roll No"/>
+                    <Label htmlFor="rollno">Roll No</Label>
 
-                    <TextInput
+                    <Input
                         id="rollno"
                         type="text"
                         name="rollno"
@@ -63,9 +65,9 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email"/>
+                    <Label htmlFor="email">Email</Label>
 
-                    <TextInput
+                    <Input
                         id="email"
                         type="email"
                         name="email"
@@ -80,9 +82,9 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password"/>
+                    <Label htmlFor="password">Password</Label>
 
-                    <TextInput
+                    <Input
                         id="password"
                         type="password"
                         name="password"
@@ -97,12 +99,9 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
+                    <Label htmlFor="password_confirmation">Confirm Password</Label>
 
-                    <TextInput
+                    <Input
                         id="password_confirmation"
                         type="password"
                         name="password_confirmation"
@@ -121,17 +120,19 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
+                <div className="h-captcha my-4" data-sitekey="d6aa25f6-76b8-4efc-a9d0-5086bef85556"></div>
+
+                <div className="space-y-2">
+                    <Button disabled={processing} className="w-full">
+                        Register
+                    </Button>
+
                     <Link
                         href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="underline underline-offset-4 text-center block"
                     >
                         Already registered?
                     </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
                 </div>
             </form>
         </GuestLayout>
