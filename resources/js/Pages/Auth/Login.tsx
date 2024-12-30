@@ -79,7 +79,7 @@ export default function Login({
                         name="remember"
                         id="remember"
                         checked={data.remember}
-                        onCheckedChange={(checked) => {
+                        onCheckedChange={(checked: boolean) => {
                             setData('remember', checked);
                         }}
                     />
@@ -98,10 +98,19 @@ export default function Login({
                             Forgot your password?
                         </Link>
                     )}
+                </div>
 
-                    <Button disabled={processing}>
-                        Log in
+                <div className="space-y-2">
+                    <Button disabled={processing} className="w-full">
+                        Login
                     </Button>
+
+                    <Link
+                        href={route('register')}
+                        className="underline underline-offset-4 text-center block"
+                    >
+                        Register
+                    </Link>
                 </div>
             </form>
         </GuestLayout>
