@@ -20,6 +20,7 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        Log::info($input);
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'rollno' => ['required', 'string', 'min:8', 'max:8'],
@@ -42,7 +43,6 @@ class CreateNewUser implements CreatesNewUsers
                 "response" => $h_captcha_response
             ]);
         $json = $response->json();
-        Log::info($response);
 
         if (!$json["success"]) {
             abort(403, "Captcha validation failed");

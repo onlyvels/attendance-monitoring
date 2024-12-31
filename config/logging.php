@@ -65,6 +65,16 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'axiom' => [
+            'driver' => 'monolog',
+            'handler' => App\Logging\AxiomHandler::class,
+            'level' => env('LOG_LEVEL', 'debug'),
+            'with' => [
+                'apiToken' => env('AXIOM_API_TOKEN'),
+                'dataset' => env('AXIOM_DATASET'),
+            ],
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
@@ -89,7 +99,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],
