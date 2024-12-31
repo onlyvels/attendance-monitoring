@@ -5,6 +5,7 @@ import {FormEventHandler} from 'react';
 import {Button} from "@/Components/UI/Button";
 import {Input} from "@/Components/UI/Input";
 import {Label} from "@/Components/UI/label";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 export default function Register() {
     const {data, setData, post, processing, errors, reset} = useForm({
@@ -13,6 +14,7 @@ export default function Register() {
         rollno: '',
         password: '',
         password_confirmation: '',
+        'h-captcha-response': '',
     });
 
     const submit: FormEventHandler = (e) => {
@@ -25,9 +27,7 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register">
-                <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-            </Head>
+            <Head title="Register"></Head>
 
             <form onSubmit={submit}>
                 <div>
@@ -125,7 +125,16 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="h-captcha my-4" data-sitekey="d6aa25f6-76b8-4efc-a9d0-5086bef85556"></div>
+                <div className="my-4">
+                    <HCaptcha
+                        sitekey="d6aa25f6-76b8-4efc-a9d0-5086bef85556"
+                        onVerify={(token, ekey) => setData('h-captcha-response', token)}
+                    />
+                    <InputError
+                        message={errors["h-captcha-response"]}
+                        className="mt-2"
+                    />
+                </div>
 
                 <div className="space-y-2">
                     <Button disabled={processing} className="w-full">

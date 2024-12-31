@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -30,9 +31,22 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
+            'h-captcha-response' => ['required', 'string'],
         ])->validate();
 
-        Log::info($input);
+        $ip = request()->ip();
+        $h_captcha_response = $input['h-captcha-response'];
+        $response =
+            Http::asForm()->post("https://api.hcaptcha.com/siteverify", [
+                "secret" => config('hcaptcha.secret'),
+                "response" => $h_captcha_response
+            ]);
+        $json = $response->json();
+        Log::info($response);
+
+        if (!$json["success"]) {
+            abort(403, "Captcha validation failed");
+        }
 
         return User::create([
             'name' => $input['name'],
