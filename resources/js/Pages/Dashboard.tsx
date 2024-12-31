@@ -2,6 +2,8 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import {Head} from '@inertiajs/react';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/Components/UI/Table";
 import SubjectAttendanceChart from "@/Pages/Dashboard/SubjectAttendanceChart";
+import {Alert, AlertDescription, AlertTitle,} from "@/Components/UI/alert";
+import {InfoIcon} from "lucide-react";
 
 export interface SubjectFilter {
     id: number
@@ -58,7 +60,14 @@ export default function Dashboard({subject_filters, scrapes}: {
                 <Head title="Dashboard"/>
 
                 <div className="py-12 mx-auto max-w-7xl px-4 lg:px-8">
-                    <h1>No Data Yet</h1>
+                    <Alert>
+                        <InfoIcon className="h-4 w-4"/>
+                        <AlertTitle>Nothing to show yet</AlertTitle>
+                        <AlertDescription>
+                            Our systems update daily at 7:00 PM with new data. Check back then to explore your
+                            attendance.
+                        </AlertDescription>
+                    </Alert>
                 </div>
             </Authenticated>
         )
