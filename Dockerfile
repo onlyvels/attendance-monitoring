@@ -1,6 +1,4 @@
 FROM dunglas/frankenphp AS base
-COPY . /app
-WORKDIR /app
 
 RUN apt-get update; \
     apt-get upgrade -yqq; \
@@ -11,6 +9,9 @@ RUN apt-get update; \
     libpq-dev
 
 RUN docker-php-ext-install pcntl pdo_pgsql
+
+COPY . /app
+WORKDIR /app
 
 FROM base AS vendor
 

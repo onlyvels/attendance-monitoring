@@ -2,7 +2,6 @@
 set -eo pipefail
 shopt -s nullglob
 
-php artisan migrate --isolated --force
 php artisan optimize
 php artisan config:cache
 php artisan event:cache
