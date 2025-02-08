@@ -1,6 +1,6 @@
 import {CartesianGrid, Line, LineChart, XAxis, YAxis} from "recharts"
 
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/Components/UI/Card"
+import {Card, CardContent, CardHeader, CardTitle} from "@/Components/UI/Card"
 import {
     ChartConfig,
     ChartContainer,
@@ -38,13 +38,12 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
         }
     ), {}) satisfies ChartConfig;
 
-    console.log(JSON.stringify(chartData, null, 4))
+    // console.log(JSON.stringify(chartData, null, 4))
 
     return (
         <Card className="mb-6">
             <CardHeader>
                 <CardTitle>Subject Wise Attendance</CardTitle>
-                <CardDescription>Past week subject wise attendance.</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -57,7 +56,7 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                         <XAxis
                             dataKey="date"
                         />
-                        <YAxis/>
+                        <YAxis domain={[0, 100]}/>
                         <ChartTooltip
                             content={<ChartTooltipContent className="hidden lg:grid"/>}
                         />
