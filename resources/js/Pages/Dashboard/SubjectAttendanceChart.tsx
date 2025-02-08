@@ -10,6 +10,7 @@ import {
     ChartTooltipContent
 } from "@/Components/UI/Chart"
 import {Scrape, SubjectFilter} from "@/Pages/Dashboard";
+import {Badge} from "@/Components/UI/Badge";
 
 export default function SubjectAttendanceChart({subject_filters, scrapes}: {
     subject_filters: SubjectFilter[],
@@ -43,10 +44,11 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
     return (
         <Card className="mb-6">
             <CardHeader>
-                <CardTitle>Subject Wise Attendance</CardTitle>
+                <CardTitle className="text-lg font-bold flex gap-2 text-center justify-center items-center">Subject Wise
+                    Attendance <Badge variant="outline">7 Days</Badge></CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig}>
+                <ChartContainer config={chartConfig} className="h-[400px] w-full">
                     <LineChart
                         accessibilityLayer
                         data={chartData}
@@ -58,7 +60,10 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                         />
                         <YAxis domain={[0, 100]}/>
                         <ChartTooltip
-                            content={<ChartTooltipContent className="hidden lg:grid"/>}
+                            content={
+                                <ChartTooltipContent className="hidden lg:grid"
+                                                     labelFormatter={(label, payload) => `${label}`}
+                                />}
                         />
                         <ChartLegend content={<ChartLegendContent className="hidden lg:flex"/>}/>
                         {subject_filters.map((subject) => (
@@ -67,7 +72,6 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                                 dataKey={subject.subject.subject_code}
                                 type="linear"
                                 stroke={`var(--color-${subject.subject.subject_code})`}
-                                strokeWidth={2}
                                 dot={false}
                             />
                         ))}
