@@ -4,6 +4,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/C
 import SubjectAttendanceChart from "@/Pages/Dashboard/SubjectAttendanceChart";
 import {Alert, AlertDescription, AlertTitle,} from "@/Components/UI/alert";
 import {InfoIcon} from "lucide-react";
+import {Badge} from "@/Components/UI/Badge";
 
 export interface SubjectFilter {
     id: number
@@ -84,31 +85,36 @@ export default function Dashboard({subject_filters, scrapes}: {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl px-4 lg:px-8">
-                    <SubjectAttendanceChart scrapes={scrapes}
+                    <SubjectAttendanceChart scrapes={scrapes.slice(0, 7)}
                                             subject_filters={subject_filters}/>
 
-                    <Table>
+                    <h2 className="font-bold pb-6 text-lg flex gap-2 items-center justify-center">Attendance
+                        Details <Badge variant="outline">Semester</Badge></h2>
+                    <Table className="w-screen">
                         <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-[100px] text-center py-2">Date</TableHead>
-                                <TableHead className="w-[100px] text-center py-2">Last Updated</TableHead>
-                                <TableHead className="w-[100px] text-center py-2">Percent</TableHead>
+                            <TableRow className="bg-gray-200">
+                                <TableHead className="text-center font-semibold py-6 bg-inherit">RAN AT</TableHead>
+                                <TableHead className="text-center font-semibold py-6 bg-inherit">ERP
+                                    UPDATED</TableHead>
+                                <TableHead className="text-center font-semibold py-6 bg-inherit">PERCENT</TableHead>
                                 {subject_filters.map(subject => (
-                                    <TableHead className="w-[100px] text-sm text-center py-2"
+                                    <TableHead className="text-center font-semibold py-6 bg-inherit"
                                                key={subject.subject.id}>{subject.subject.name}</TableHead>
                                 ))}
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {scrapes.map(scrape => (
-                                <TableRow key={scrape.id}>
-                                    <TableCell className="text-center">{scrape.date}</TableCell>
+                                <TableRow key={scrape.id} className="bg-white">
+                                    <TableCell className="text-center p-3">{scrape.date}</TableCell>
                                     <TableCell
-                                        className="text-center">{scrape.attendance.last_updated}</TableCell>
-                                    <TableCell className="text-center">{scrape.attendance.percent}</TableCell>
+                                        className="text-center p-3">{scrape.attendance.last_updated}</TableCell>
+                                    <TableCell
+                                        className="text-center p-3">{scrape.attendance.percent}%</TableCell>
                                     {scrape.subject_attendances.map(attendance => (
                                         <TableCell
-                                            key={attendance.id} className="text-center">{attendance.percent}</TableCell>
+                                            key={attendance.id}
+                                            className="text-center p-3">{attendance.percent}%</TableCell>
                                     ))}
                                 </TableRow>
                             ))}
