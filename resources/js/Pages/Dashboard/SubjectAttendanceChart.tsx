@@ -11,7 +11,30 @@ import {
 } from "@/Components/UI/Chart"
 import {Scrape, SubjectFilter} from "@/Pages/Dashboard";
 import {Badge} from "@/Components/UI/Badge";
-import React from "react";
+import React, {useEffect, useState} from "react";
+
+function getWindowDimensions() {
+    const {innerWidth: width, innerHeight: height} = window;
+    return {
+        width,
+        height
+    };
+}
+
+function useWindowDimensions() {
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return windowDimensions;
+}
 
 interface CustomizedAxisTickProps {
     x: number;
@@ -22,7 +45,6 @@ interface CustomizedAxisTickProps {
 }
 
 const CustomizedAxisTick: React.FC<CustomizedAxisTickProps> = (props) => {
-    console.log(props);
     const {x, y, payload, index, visibleTicksCount} = props;
 
     const tickProps: TextProps = {
@@ -97,6 +119,8 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
         }
     ), {}) satisfies ChartConfig;
 
+    const {height, width} = useWindowDimensions();
+
     return (
         <Card className="mb-6">
             <CardHeader>
@@ -118,7 +142,8 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                             tickLine={{stroke: "#d3d3d3"}}
                             tick={(props) => <CustomizedAxisTick {...props} />}
                             reversed={true}
-                            interval={0}
+                            interval={width > 800 ? 0 : "equidistantPreserveStart"}
+                            minTickGap={35}
                         />
                         <YAxis
                             axisLine={{stroke: "#d3d3d3"}}
@@ -129,9 +154,9 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                         />
                         <ChartTooltip
                             content={
-                                <ChartTooltipContent className="hidden lg:grid"
-                                                     labelFormatter={(label, payload) => `${label} - ${payload[0].payload.percent}%`}
-                                                     labelClassName="font-semibold text-center"
+                                <ChartTooltipContent
+                                    labelFormatter={(label, payload) => `${label} - ${payload[0].payload.percent}%`}
+                                    labelClassName="font-semibold text-center"
                                 />
                             }
                         />
