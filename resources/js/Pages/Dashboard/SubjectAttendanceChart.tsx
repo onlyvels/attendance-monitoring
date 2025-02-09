@@ -25,6 +25,7 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
 
         return {
             "date": sub_attendance.date,
+            "percent": sub_attendance.attendance.percent,
             ...subject_percents,
         };
     });
@@ -48,24 +49,34 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                     Attendance <Badge variant="outline">7 Days</Badge></CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig} className="h-[400px] w-full">
+                <ChartContainer config={chartConfig} className="h-[50vh] min-h-[200px] w-full">
                     <LineChart
                         accessibilityLayer
                         data={chartData}
+                        margin={{left: 0}}
                     >
                         <CartesianGrid
                             strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.3}/>
                         <XAxis
                             dataKey="date"
                         />
-                        <YAxis domain={[0, 100]}/>
+                        <YAxis
+                            domain={[0, 100]}
+                            tickFormatter={(value) => `${value}%`}
+                            width={40}
+                        />
                         <ChartTooltip
                             content={
                                 <ChartTooltipContent className="hidden lg:grid"
-                                                     labelFormatter={(label, payload) => `${label}`}
-                                />}
+                                                     labelFormatter={(label, payload) => `${label} - ${payload[0].payload.percent}%`}
+                                                     labelClassName="font-semibold text-center"
+                                />
+                            }
                         />
-                        <ChartLegend content={<ChartLegendContent className="hidden lg:flex"/>}/>
+                        <ChartLegend
+                            content={<ChartLegendContent className="hidden lg:flex"/>}
+                        />
+
                         {subject_filters.map((subject) => (
                             <Line
                                 key={subject.subject.id}
