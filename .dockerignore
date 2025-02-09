@@ -25,3 +25,4 @@ frankenphp
 frankenphp-worker.php
 database/database.sqlite
 bootstrap/cache/*
+Dockerfile
