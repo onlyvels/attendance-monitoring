@@ -1,4 +1,4 @@
-import {CartesianGrid, Line, LineChart, XAxis, YAxis} from "recharts"
+import {CartesianGrid, Line, LineChart, Text, TextProps, XAxis, YAxis} from "recharts"
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/Components/UI/Card"
 import {
@@ -11,6 +11,63 @@ import {
 } from "@/Components/UI/Chart"
 import {Scrape, SubjectFilter} from "@/Pages/Dashboard";
 import {Badge} from "@/Components/UI/Badge";
+import React from "react";
+
+interface CustomizedAxisTickProps {
+    x: number;
+    y: number;
+    payload: any;
+    index: number;
+    visibleTicksCount: number;
+}
+
+const CustomizedAxisTick: React.FC<CustomizedAxisTickProps> = (props) => {
+    console.log(props);
+    const {x, y, payload, index, visibleTicksCount} = props;
+
+    const tickProps: TextProps = {
+        textAnchor: "middle",
+        verticalAnchor: "start",
+        orientation: "bottom",
+        stroke: 'none',
+        fill: "#666"
+    };
+
+    if (index === visibleTicksCount - 1)
+        tickProps.textAnchor = "start";
+
+    if (index === 0)
+        tickProps.textAnchor = "end";
+
+    return (
+        <Text className="recharts-cartesian-axis-tick-value" x={x} y={y} {...tickProps}
+        >
+            {payload.value}
+        </Text>
+    );
+}
+
+const CustomizedYAxisTick: React.FC<CustomizedAxisTickProps> = (props) => {
+    const {x, y, payload, index} = props;
+
+    const tickProps: TextProps = {
+        textAnchor: "end",
+        verticalAnchor: "middle",
+        orientation: "bottom",
+        stroke: 'none',
+        fill: "#666"
+    };
+
+    if (index === 0)
+        tickProps.verticalAnchor = "end";
+
+    return (
+        <Text className="recharts-cartesian-axis-tick-value" x={x} y={y} {...tickProps}
+        >
+            {payload.value + "%"}
+        </Text>
+    );
+}
 
 export default function SubjectAttendanceChart({subject_filters, scrapes}: {
     subject_filters: SubjectFilter[],
@@ -40,8 +97,6 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
         }
     ), {}) satisfies ChartConfig;
 
-    // console.log(JSON.stringify(chartData, null, 4))
-
     return (
         <Card className="mb-6">
             <CardHeader>
@@ -59,11 +114,18 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                             strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.3}/>
                         <XAxis
                             dataKey="date"
+                            axisLine={{stroke: "#d3d3d3"}}
+                            tickLine={{stroke: "#d3d3d3"}}
+                            tick={(props) => <CustomizedAxisTick {...props} />}
+                            reversed={true}
+                            interval={0}
                         />
                         <YAxis
+                            axisLine={{stroke: "#d3d3d3"}}
+                            tickLine={{stroke: "#d3d3d3"}}
                             domain={[0, 100]}
-                            tickFormatter={(value) => `${value}%`}
                             width={40}
+                            tick={(props) => <CustomizedYAxisTick {...props} />}
                         />
                         <ChartTooltip
                             content={
