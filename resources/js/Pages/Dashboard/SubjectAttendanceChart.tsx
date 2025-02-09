@@ -161,7 +161,7 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                             }
                         />
                         <ChartLegend
-                            content={<ChartLegendContent className="hidden lg:flex"/>}
+                            content={<ChartLegendContent/>}
                         />
 
                         {subject_filters.map((subject) => (
