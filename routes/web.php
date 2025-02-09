@@ -19,7 +19,11 @@ Route::get('/dashboard', function () {
         ->with('attendance')
         ->with(['subject_attendances' => function (Builder $query) use ($subject_filters) {
             $query->whereIn('subject_id', $subject_filters->pluck('subject_id'));
-        }])->get()->sortByDesc('date')->values()->all();
+        }])
+        ->whereHas('subject_attendances', function (Builder $query) use ($subject_filters) {
+            $query->whereIn('subject_id', $subject_filters->pluck('subject_id'));
+        })
+        ->get()->sortByDesc('date')->values()->all();
 
     return Inertia::render('Dashboard', [
         'subject_filters' => $subject_filters,
