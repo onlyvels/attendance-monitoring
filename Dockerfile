@@ -18,22 +18,29 @@ FROM base AS vendor
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN composer install --no-dev
 
-FROM node:20-slim AS public
+FROM node:20 AS public
 
-RUN corepack enable
+WORKDIR /app
 
+# pnpm env setup
+ENV PNPM_HOME="/root/.local/share/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV SHELL="sh"
+ENV ENV="/root/.shrc"
+
+# mostly static dependencies
+RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.shrc" SHELL="$(which sh)" sh -
+COPY --from=vendor /app/vendor /app/vendor
+
+# likely to change
 COPY package.json /app/package.json
 COPY pnpm-lock.yaml /app/pnpm-lock.yaml
 COPY tsconfig.json /app/tsconfig.json
 
-COPY --from=vendor /app/vendor /app/vendor
-
-WORKDIR /app
 RUN pnpm install --frozen-lockfile
 
 # copy src to build
 COPY . /app
-
 RUN pnpm run build
 
 # Prod server, copy vendor & public and run octane server
