@@ -148,8 +148,8 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                         <YAxis
                             axisLine={{stroke: "#d3d3d3"}}
                             tickLine={{stroke: "#d3d3d3"}}
-                            domain={[0, 100]}
-                            width={40}
+                            domain={['dataMin', 'dataMax']}
+                            width={60}
                             tick={(props) => <CustomizedYAxisTick {...props} />}
                         />
                         <ChartTooltip
@@ -170,6 +170,7 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                                 dataKey={subject.subject.subject_code}
                                 type="linear"
                                 stroke={`var(--color-${subject.subject.subject_code})`}
+                                strokeWidth={1.5}
                                 dot={false}
                             />
                         ))}
