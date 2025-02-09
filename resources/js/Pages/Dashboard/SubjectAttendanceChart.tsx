@@ -128,7 +128,7 @@ export default function SubjectAttendanceChart({subject_filters, scrapes}: {
                     Attendance <Badge variant="outline">7 Days</Badge></CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig} className="h-[50vh] min-h-[200px] w-full">
+                <ChartContainer config={chartConfig} className="h-[50vh] min-h-[600px] w-full">
                     <LineChart
                         accessibilityLayer
                         data={chartData}
