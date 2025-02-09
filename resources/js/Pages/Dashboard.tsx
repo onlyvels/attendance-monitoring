@@ -93,12 +93,14 @@ export default function Dashboard({subject_filters, scrapes}: {
                     <Table className="w-screen min-w-[2000px]">
                         <TableHeader>
                             <TableRow className="bg-gray-200">
-                                <TableHead className="text-center font-semibold py-6 bg-inherit">RAN AT</TableHead>
-                                <TableHead className="text-center font-semibold py-6 bg-inherit">ERP
+                                <TableHead className="text-center font-semibold py-6 bg-inherit max-w-[200px]">RAN
+                                    AT</TableHead>
+                                <TableHead className="text-center font-semibold py-6 bg-inherit max-w-[200px]">ERP
                                     UPDATED</TableHead>
-                                <TableHead className="text-center font-semibold py-6 bg-inherit">PERCENT</TableHead>
+                                <TableHead
+                                    className="text-center font-semibold py-6 bg-inherit max-w-[200px]">PERCENT</TableHead>
                                 {subject_filters.map(subject => (
-                                    <TableHead className="text-center font-semibold py-6 bg-inherit"
+                                    <TableHead className="text-center font-semibold py-6 bg-inherit max-w-[200px]"
                                                key={subject.subject.id}>{subject.subject.name}</TableHead>
                                 ))}
                             </TableRow>
