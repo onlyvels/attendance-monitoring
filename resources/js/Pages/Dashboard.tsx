@@ -76,7 +76,7 @@ export default function Dashboard({subject_filters, scrapes}: {
     return (
         <Authenticated
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                <h2 className="font-bold text-lg leading-tight text-gray-800 dark:text-gray-200">
                     Dashboard
                 </h2>
             }
@@ -90,7 +90,7 @@ export default function Dashboard({subject_filters, scrapes}: {
 
                     <h2 className="font-bold pb-6 text-lg flex gap-2 items-center justify-center">Attendance
                         Details <Badge variant="outline">Semester</Badge></h2>
-                    <Table className="w-screen">
+                    <Table className="w-screen min-w-[2000px]">
                         <TableHeader>
                             <TableRow className="bg-gray-200">
                                 <TableHead className="text-center font-semibold py-6 bg-inherit">RAN AT</TableHead>
